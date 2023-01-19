@@ -41,8 +41,8 @@ async function getPage (ctx) : void {
  * @apiTitle "Create Page"
  * @apiPath "/page/:slug"
  * @apiMethod POST
- * @apiParam string title
- * @apiParam json body
+ * @apiParam string title true
+ * @apiParam json content false "A json array of page blocks"
  * @apiReturn string slug
  * @apiReturn string title
  * @apiReturn json content
@@ -75,9 +75,9 @@ async function createPage (ctx) : void {
  * @apiTitle "Update Page"
  * @apiPath "/page/:slug"
  * @apiMethod PUT
- * @apiParam string title
- * @apiParam string slug
- * @apiParam json body
+ * @apiParam string title false "The new title of the page"
+ * @apiParam string slug false "The new url slug of the page"
+ * @apiParam json content false "A json array of page blocks"
  * @apiReturn string slug
  * @apiReturn string title
  * @apiReturn json content

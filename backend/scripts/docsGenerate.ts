@@ -43,6 +43,8 @@ function extractApiComments (fileContent: string): object {
                     outputComment.params.push({
                         type: parts[1],
                         name: parts[2],
+                        required: (parts[3] === "true"),
+                        description: parts[4]?.replaceAll("\"", ""),
                     });
                     break;
                 case "Return":
@@ -94,10 +96,10 @@ async function generatePage (pathToFile: string) : void {
         if(apiCall.params.length > 0) {
             output += `#### Parameters\n`;
 
-            output += `| Name | Type | Required | Default |\n`;
+            output += `| Name | Type | Required | Description |\n`;
             output += `| --- | --- | --- | --- |\n`;
             apiCall.params.forEach(parameter => {
-                output += `| ${parameter.name} | ${parameter.type} | --- | --- |\n`;
+                output += `| ${parameter.name} | ${parameter.type} | ${parameter.required ? "&check;" : "&cross;"} | ${parameter.description ?? ""} |\n`;
             });
         }
 

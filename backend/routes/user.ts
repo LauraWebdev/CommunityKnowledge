@@ -40,8 +40,8 @@ async function getUser (ctx) : void {
  * @apiTitle "Create User"
  * @apiPath "/user/:username"
  * @apiMethod POST
- * @apiParam string username
- * @apiParam string password
+ * @apiParam string username true
+ * @apiParam string password true
  * @apiReturn string username
  * @apiReturn datetime createdAt
  * @apiReturn datetime updatedAt
@@ -73,8 +73,8 @@ async function createUser (ctx) : void {
  * @apiTitle "Update User"
  * @apiPath "/user/:username"
  * @apiMethod PUT
- * @apiParam string username
- * @apiParam string password
+ * @apiParam string username false
+ * @apiParam string password false
  * @apiReturn string username
  * @apiReturn datetime createdAt
  * @apiReturn datetime updatedAt

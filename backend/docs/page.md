@@ -20,10 +20,10 @@
 **AUTH REQUIRED** This api call needs authentification. Generate a token via /auth/token/create and send it via the Authorization header.
 
 #### Parameters
-| Name | Type | Required | Default |
+| Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| title | string | --- | --- |
-| body | json | --- | --- |
+| title | string | &check; |  |
+| content | json | &cross; | A json array of page blocks |
 #### Returns
 | Name | Type | Description |
 | --- | --- | --- |
@@ -39,11 +39,11 @@
 **AUTH REQUIRED** This api call needs authentification. Generate a token via /auth/token/create and send it via the Authorization header.
 
 #### Parameters
-| Name | Type | Required | Default |
+| Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| title | string | --- | --- |
-| slug | string | --- | --- |
-| body | json | --- | --- |
+| title | string | &cross; | The new title of the page |
+| slug | string | &cross; | The new url slug of the page |
+| content | json | &cross; | A json array of page blocks |
 #### Returns
 | Name | Type | Description |
 | --- | --- | --- |

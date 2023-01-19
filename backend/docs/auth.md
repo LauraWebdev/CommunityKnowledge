@@ -6,10 +6,10 @@
 **[POST]** /api/auth/token/create
 
 #### Parameters
-| Name | Type | Required | Default |
+| Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| username | string | --- | --- |
-| password | string | --- | --- |
+| username | string | &check; |  |
+| password | string | &check; |  |
 #### Returns
 | Name | Type | Description |
 | --- | --- | --- |
@@ -20,9 +20,9 @@
 **[POST]** /api/auth/token/verify
 
 #### Parameters
-| Name | Type | Required | Default |
+| Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| token | string | --- | --- |
+| token | string | &check; | The JWT token |
 #### Returns
 | Name | Type | Description |
 | --- | --- | --- |

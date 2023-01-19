@@ -13,8 +13,8 @@ routesAuth.post("/token/verify", tokenVerify);
  * @apiTitle "Token Create"
  * @apiPath "/auth/token/create"
  * @apiMethod POST
- * @apiParam string username
- * @apiParam string password
+ * @apiParam string username true
+ * @apiParam string password true
  * @apiReturn string token "JWT token for further authentification"
  * @apiReturn User user "User object of authenticated user"
  */
@@ -68,7 +68,7 @@ export async function tokenCreate (ctx) {
  * @apiTitle "Token Verify"
  * @apiPath "/auth/token/verify"
  * @apiMethod POST
- * @apiParam string token
+ * @apiParam string token true "The JWT token"
  * @apiReturn User user "User object of authenticated user"
  */
 export async function tokenVerify (ctx) {

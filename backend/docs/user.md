@@ -18,10 +18,10 @@
 **AUTH REQUIRED** This api call needs authentification. Generate a token via /auth/token/create and send it via the Authorization header.
 
 #### Parameters
-| Name | Type | Required | Default |
+| Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| username | string | --- | --- |
-| password | string | --- | --- |
+| username | string | &check; |  |
+| password | string | &check; |  |
 #### Returns
 | Name | Type | Description |
 | --- | --- | --- |
@@ -35,10 +35,10 @@
 **AUTH REQUIRED** This api call needs authentification. Generate a token via /auth/token/create and send it via the Authorization header.
 
 #### Parameters
-| Name | Type | Required | Default |
+| Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| username | string | --- | --- |
-| password | string | --- | --- |
+| username | string | &cross; |  |
+| password | string | &cross; |  |
 #### Returns
 | Name | Type | Description |
 | --- | --- | --- |
