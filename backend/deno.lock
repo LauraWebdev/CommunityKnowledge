@@ -241,6 +241,8 @@
     "https://deno.land/std@0.173.0/flags/mod.ts": "d1cdefa18472ef69858a17df5cf7c98445ed27ac10e1460183081303b0ebc270",
     "https://deno.land/std@0.173.0/fmt/colors.ts": "938c5d44d889fb82eff6c358bea8baa7e85950a16c9f6dae3ec3a7a729164471",
     "https://deno.land/std@0.173.0/fmt/printf.ts": "8afc5987c9a88d345cd4de25b30126b16062635f51de9496f0270b0e03b7b10f",
+    "https://deno.land/std@0.173.0/fs/_util.ts": "65381f341af1ff7f40198cee15c20f59951ac26e51ddc651c5293e24f9ce6f32",
+    "https://deno.land/std@0.173.0/fs/walk.ts": "ea95ffa6500c1eda6b365be488c056edc7c883a1db41ef46ec3bf057b1c0fe32",
     "https://deno.land/std@0.173.0/node/_core.ts": "8667bf9129cdcbaac6f5c14f4def45ca954928baaa697a0ffdb0ee1556d4c644",
     "https://deno.land/std@0.173.0/node/_events.d.ts": "1347437fd6b084d7c9a4e16b9fe7435f00b030970086482edeeb3b179d0775af",
     "https://deno.land/std@0.173.0/node/_events.mjs": "d4ba4e629abe3db9f1b14659fd5c282b7da8b2b95eaf13238eee4ebb142a2448",

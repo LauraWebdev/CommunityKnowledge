@@ -1,5 +1,6 @@
 import {config, env, log } from "../vendor.ts";
 import * as path from "https://deno.land/std/path/mod.ts";
+import { walk } from "https://deno.land/std/fs/walk.ts";
 env({ export: true });
 
 log.branding();
@@ -135,13 +136,13 @@ async function generateReadme (files: string[]) : void {
 }
 
 async function generateDocumentation () : void {
-    // TODO: Dynamically load this
-    const files = [
-        "./routes/auth.ts",
-        "./routes/status.ts",
-        "./routes/page.ts",
-        "./routes/user.ts",
-    ];
+    let files = [];
+
+    for await (const entry of walk("./routes/")) {
+        if(entry.isFile) {
+            files.push(entry.path);
+        }
+    }
 
     for (const file: string of files) {
         await generatePage(file);
