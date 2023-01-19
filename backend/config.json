@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "title": "Test Wiki",
+  "subtitle": "This is a demo wiki for CommunityKnowledge",
+  "cors": {
+    "origin": "*"
+  }
+}
