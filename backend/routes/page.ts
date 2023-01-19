@@ -16,6 +16,11 @@ routesPage.put("/:slug", authMiddleware, updatePage);
  * @apiTitle "Get Page"
  * @apiPath "/page/:slug"
  * @apiMethod GET
+ * @apiReturn string slug
+ * @apiReturn string title
+ * @apiReturn json content
+ * @apiReturn datetime createdAt
+ * @apiReturn datetime updatedAt
  */
 async function getPage (ctx) : void {
     let page = await Page.where('slug', ctx.params.slug).get();
@@ -38,6 +43,12 @@ async function getPage (ctx) : void {
  * @apiMethod POST
  * @apiParam string title
  * @apiParam json body
+ * @apiReturn string slug
+ * @apiReturn string title
+ * @apiReturn json content
+ * @apiReturn datetime createdAt
+ * @apiReturn datetime updatedAt
+ * @apiAuthentication
  */
 async function createPage (ctx) : void {
     let data = await ctx.request.body().value;
@@ -67,6 +78,12 @@ async function createPage (ctx) : void {
  * @apiParam string title
  * @apiParam string slug
  * @apiParam json body
+ * @apiReturn string slug
+ * @apiReturn string title
+ * @apiReturn json content
+ * @apiReturn datetime createdAt
+ * @apiReturn datetime updatedAt
+ * @apiAuthentication
  */
 async function updatePage (ctx) : void {
     let data = await ctx.request.body().value;

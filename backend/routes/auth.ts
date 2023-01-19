@@ -15,6 +15,8 @@ routesAuth.post("/token/verify", tokenVerify);
  * @apiMethod POST
  * @apiParam string username
  * @apiParam string password
+ * @apiReturn string token "JWT token for further authentification"
+ * @apiReturn User user "User object of authenticated user"
  */
 export async function tokenCreate (ctx) {
     let data = await ctx.request.body().value;
@@ -67,6 +69,7 @@ export async function tokenCreate (ctx) {
  * @apiPath "/auth/token/verify"
  * @apiMethod POST
  * @apiParam string token
+ * @apiReturn User user "User object of authenticated user"
  */
 export async function tokenVerify (ctx) {
     let data = await ctx.request.body().value;
@@ -106,10 +109,22 @@ export async function tokenVerify (ctx) {
     }
 
     ctx.response.status = 200;
-    ctx.response.body = JSON.stringify(User.sanitize(user[0]));
+    ctx.response.body = JSON.stringify({
+        user: User.sanitize(user[0])
+    });
 }
 
+
+/**
+ * @apiTitle "Me"
+ * @apiPath "/auth/me"
+ * @apiMethod GET
+ * @apiReturn User user "User object of authenticated user"
+ * @apiAuthentication
+ */
 routesAuth.get("/me", authMiddleware, async (ctx) => {
     ctx.response.status = 200;
-    ctx.response.body = JSON.stringify(User.sanitize(ctx.request.user));
+    ctx.response.body = JSON.stringify({
+        user: User.sanitize(ctx.request.user)
+    });
 });

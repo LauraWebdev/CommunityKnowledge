@@ -15,6 +15,8 @@ function extractApiComments (fileContent: string): object {
     comments.forEach( comment => {
         let outputComment = {};
         outputComment.params = [];
+        outputComment.returns = [];
+        outputComment.needsAuthentification = false;
 
         let annotations = comment.match(/@([a-zA-Z]+)[\s]([^@\n\r]*)/g);
         if(annotations === null) return null;
@@ -33,10 +35,20 @@ function extractApiComments (fileContent: string): object {
                 case "Method":
                     outputComment.method = parts[1].replaceAll("\"", "");
                     break;
+                case "Authentication":
+                    outputComment.needsAuthentification = true;
+                    break;
                 case "Param":
                     outputComment.params.push({
                         type: parts[1],
                         name: parts[2],
+                    });
+                    break;
+                case "Return":
+                    outputComment.returns.push({
+                        type: parts[1],
+                        name: parts[2],
+                        description: parts[3]?.replaceAll("\"", ""),
                     });
                     break;
             }
@@ -73,13 +85,30 @@ async function generatePage (pathToFile: string) : void {
     apiData.forEach(apiCall => {
         output += `\n### ${apiCall.title}\n`;
         output += `**[${apiCall.method}]** /api${apiCall.path}\n\n`;
-        output += `#### Parameters\n`;
 
-        output += `| Name | Type | Required | Default |\n`;
-        output += `| --- | --- | --- | --- |\n`;
-        apiCall.params.forEach(parameter => {
-            output += `| ${parameter.name} | ${parameter.type} | --- | --- |\n`;
-        });
+        if(apiCall.needsAuthentification) {
+            output += `**AUTH REQUIRED** This api call needs authentification. Generate a token via /auth/token/create and send it via the Authorization header.\n\n`;
+        }
+
+        if(apiCall.params.length > 0) {
+            output += `#### Parameters\n`;
+
+            output += `| Name | Type | Required | Default |\n`;
+            output += `| --- | --- | --- | --- |\n`;
+            apiCall.params.forEach(parameter => {
+                output += `| ${parameter.name} | ${parameter.type} | --- | --- |\n`;
+            });
+        }
+
+        if(apiCall.returns.length > 0) {
+            output += `#### Returns\n`;
+
+            output += `| Name | Type | Description |\n`;
+            output += `| --- | --- | --- |\n`;
+            apiCall.returns.forEach(returnItem => {
+                output += `| ${returnItem.name} | ${returnItem.type} | ${returnItem.description ?? ""} |\n`;
+            });
+        }
     });
 
     log.info("Writing file...");
@@ -109,7 +138,7 @@ async function generateDocumentation () : void {
     // TODO: Dynamically load this
     const files = [
         "./routes/auth.ts",
-        "./routes/main.ts",
+        "./routes/status.ts",
         "./routes/page.ts",
         "./routes/user.ts",
     ];

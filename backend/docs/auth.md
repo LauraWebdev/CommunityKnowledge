@@ -10,6 +10,11 @@
 | --- | --- | --- | --- |
 | username | string | --- | --- |
 | password | string | --- | --- |
+#### Returns
+| Name | Type | Description |
+| --- | --- | --- |
+| token | string | JWT token for further authentification |
+| user | User | User object of authenticated user |
 
 ### Token Verify
 **[POST]** /api/auth/token/verify
@@ -18,3 +23,17 @@
 | Name | Type | Required | Default |
 | --- | --- | --- | --- |
 | token | string | --- | --- |
+#### Returns
+| Name | Type | Description |
+| --- | --- | --- |
+| user | User | User object of authenticated user |
+
+### Me
+**[GET]** /api/auth/me
+
+**AUTH REQUIRED** This api call needs authentification. Generate a token via /auth/token/create and send it via the Authorization header.
+
+#### Returns
+| Name | Type | Description |
+| --- | --- | --- |
+| user | User | User object of authenticated user |

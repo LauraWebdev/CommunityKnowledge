@@ -1,7 +1,7 @@
 import {config, env, log, Application, Router, MySQLConnector, Database } from "./vendor.ts";
 env({ export: true });
 
-import { routesStatus } from "./routes/main.ts";
+import { routesStatus } from "./routes/status.ts";
 import { routesAuth } from "./routes/auth.ts";
 import { routesPage } from "./routes/page.ts";
 import { routesUser } from "./routes/user.ts";

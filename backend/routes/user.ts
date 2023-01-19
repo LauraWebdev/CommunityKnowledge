@@ -17,6 +17,9 @@ routesUser.put("/:username", authMiddleware, updateUser);
  * @apiTitle "Get User"
  * @apiPath "/user/:username"
  * @apiMethod GET
+ * @apiReturn string username
+ * @apiReturn datetime createdAt
+ * @apiReturn datetime updatedAt
  */
 async function getUser (ctx) : void {
     let user = await User.where('username', ctx.params.username).get();
@@ -39,6 +42,10 @@ async function getUser (ctx) : void {
  * @apiMethod POST
  * @apiParam string username
  * @apiParam string password
+ * @apiReturn string username
+ * @apiReturn datetime createdAt
+ * @apiReturn datetime updatedAt
+ * @apiAuthentication
  */
 async function createUser (ctx) : void {
     let data = await ctx.request.body().value;
@@ -68,6 +75,9 @@ async function createUser (ctx) : void {
  * @apiMethod PUT
  * @apiParam string username
  * @apiParam string password
+ * @apiReturn string username
+ * @apiReturn datetime createdAt
+ * @apiReturn datetime updatedAt
  * @apiAuthentication
  */
 async function updateUser (ctx) : void {
