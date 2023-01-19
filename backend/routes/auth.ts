@@ -6,7 +6,17 @@ import { User } from "../models/main.ts";
 
 export const routesAuth = new Router();
 
-routesAuth.post("/token/create", async (ctx) => {
+routesAuth.post("/token/create", tokenCreate);
+routesAuth.post("/token/verify", tokenVerify);
+
+/**
+ * @apiTitle "Token Create"
+ * @apiPath "/auth/token/create"
+ * @apiMethod POST
+ * @apiParam string username
+ * @apiParam string password
+ */
+export async function tokenCreate (ctx) {
     let data = await ctx.request.body().value;
 
     if(
@@ -50,9 +60,15 @@ routesAuth.post("/token/create", async (ctx) => {
         token: jwt,
         user: User.sanitize(user[0]),
     });
-});
+}
 
-routesAuth.post("/token/verify", async (ctx) => {
+/**
+ * @apiTitle "Token Verify"
+ * @apiPath "/auth/token/verify"
+ * @apiMethod POST
+ * @apiParam string token
+ */
+export async function tokenVerify (ctx) {
     let data = await ctx.request.body().value;
 
     if(
@@ -91,7 +107,7 @@ routesAuth.post("/token/verify", async (ctx) => {
 
     ctx.response.status = 200;
     ctx.response.body = JSON.stringify(User.sanitize(user[0]));
-});
+}
 
 routesAuth.get("/me", authMiddleware, async (ctx) => {
     ctx.response.status = 200;

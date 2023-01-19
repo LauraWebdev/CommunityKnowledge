@@ -6,7 +6,18 @@ import { Page } from "../models/main.ts";
 
 export const routesPage = new Router();
 
-routesPage.get("/:slug", async (ctx) => {
+routesPage.get("/:slug", getPage);
+routesPage.post("/:slug", authMiddleware, createPage);
+routesPage.put("/:slug", authMiddleware, updatePage);
+
+// TODO: Delete
+
+/**
+ * @apiTitle "Get Page"
+ * @apiPath "/page/:slug"
+ * @apiMethod GET
+ */
+async function getPage (ctx) : void {
     let page = await Page.where('slug', ctx.params.slug).get();
 
     if(page.length == 0) {
@@ -19,9 +30,16 @@ routesPage.get("/:slug", async (ctx) => {
 
     ctx.response.status = 200;
     ctx.response.body = JSON.stringify(Page.sanitize(page[0]));
-});
+}
 
-routesPage.post("/:slug", authMiddleware, async (ctx) => {
+/**
+ * @apiTitle "Create Page"
+ * @apiPath "/page/:slug"
+ * @apiMethod POST
+ * @apiParam string title
+ * @apiParam json body
+ */
+async function createPage (ctx) : void {
     let data = await ctx.request.body().value;
     data.slug = ctx.params.slug;
 
@@ -40,9 +58,17 @@ routesPage.post("/:slug", authMiddleware, async (ctx) => {
 
     ctx.response.status = result.status;
     ctx.response.body = result.body;
-});
+}
 
-routesPage.put("/:slug", authMiddleware, async (ctx) => {
+/**
+ * @apiTitle "Update Page"
+ * @apiPath "/page/:slug"
+ * @apiMethod PUT
+ * @apiParam string title
+ * @apiParam string slug
+ * @apiParam json body
+ */
+async function updatePage (ctx) : void {
     let data = await ctx.request.body().value;
 
     let page = await Page.where('slug', ctx.params.slug).get();
@@ -59,9 +85,7 @@ routesPage.put("/:slug", authMiddleware, async (ctx) => {
 
     ctx.response.status = result.status;
     ctx.response.body = result.body;
-});
-
-// TODO: Delete
+}
 
 const save = async (page: Page, data: object) => {
     try {

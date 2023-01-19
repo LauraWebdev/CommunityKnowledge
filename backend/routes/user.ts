@@ -6,7 +6,19 @@ import { User } from "../models/main.ts";
 
 export const routesUser = new Router();
 
-routesUser.get("/:username", async (ctx) => {
+routesUser.get("/:username", getUser);
+routesUser.post("/:username", createUser);
+routesUser.put("/:username", authMiddleware, updateUser);
+
+// TODO: Delete
+// TODO: Middleware where only Moderators and Users can change User
+
+/**
+ * @apiTitle "Get User"
+ * @apiPath "/user/:username"
+ * @apiMethod GET
+ */
+async function getUser (ctx) : void {
     let user = await User.where('username', ctx.params.username).get();
 
     if(user.length == 0) {
@@ -19,9 +31,16 @@ routesUser.get("/:username", async (ctx) => {
 
     ctx.response.status = 200;
     ctx.response.body = JSON.stringify(User.sanitize(user[0]));
-});
+}
 
-routesUser.post("/:username", async (ctx) => {
+/**
+ * @apiTitle "Create User"
+ * @apiPath "/user/:username"
+ * @apiMethod POST
+ * @apiParam string username
+ * @apiParam string password
+ */
+async function createUser (ctx) : void {
     let data = await ctx.request.body().value;
     data.username = ctx.params.username;
 
@@ -41,9 +60,17 @@ routesUser.post("/:username", async (ctx) => {
 
     ctx.response.status = result.status;
     ctx.response.body = result.body;
-});
+}
 
-routesUser.put("/:username", authMiddleware, async (ctx) => {
+/**
+ * @apiTitle "Update User"
+ * @apiPath "/user/:username"
+ * @apiMethod PUT
+ * @apiParam string username
+ * @apiParam string password
+ * @apiAuthentication
+ */
+async function updateUser (ctx) : void {
     let data = await ctx.request.body().value;
 
     let user = await User.where('username', ctx.params.username).get();
@@ -60,10 +87,7 @@ routesUser.put("/:username", authMiddleware, async (ctx) => {
 
     ctx.response.status = result.status;
     ctx.response.body = result.body;
-});
-
-// TODO: Delete
-// TODO: Middleware where only Moderators and Users can change User
+}
 
 const save = async (user: User, data: object) => {
     try {

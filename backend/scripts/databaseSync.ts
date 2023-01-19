@@ -1,6 +1,7 @@
 import {config, env, log, prompt, Confirm, MySQLConnector, Database} from "../vendor.ts";
-import {Page, User} from "../models/main.ts";
 env({ export: true });
+
+import {Page, User} from "../models/main.ts";
 
 log.branding();
 

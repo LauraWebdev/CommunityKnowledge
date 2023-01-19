@@ -2,6 +2,7 @@
   "tasks": {
     "dev": "deno run --allow-all --watch main.ts",
     "start": "deno run --allow-all main.ts",
-    "db:sync": "deno run --allow-all ./scripts/databaseSync.ts"
+    "db:sync": "deno run --allow-all ./scripts/databaseSync.ts",
+    "docs:generate": "deno run --allow-all --unstable ./scripts/docsGenerate.ts"
   }
 }
