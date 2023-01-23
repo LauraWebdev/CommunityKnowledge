@@ -10,7 +10,7 @@ import {jsonResponseMiddleware} from "./middlewares/jsonResponse.ts";
 import {corsMiddleware} from "./middlewares/cors.ts";
 import {Page, User} from "./models/main.ts";
 
-log.branding("CommunityKnowledge Version 1.0.0", false);
+log.branding();
 
 log.info("Connecting to database...");
 
@@ -19,7 +19,7 @@ const connector = new MySQLConnector({
     username: Deno.env.get('DATABASE_USER'),
     password: Deno.env.get('DATABASE_PASSWORD'),
     database: Deno.env.get('DATABASE_DATABASE'),
-    logger: false,
+    logger: { enable: false },
 });
 
 const db = new Database(connector);
