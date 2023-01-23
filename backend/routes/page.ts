@@ -1,4 +1,4 @@
-import { config, env, log, Router } from "../vendor.ts";
+import {config, env, log, Router, type Context} from "../vendor.ts";
 env({ export: true });
 import { authMiddleware } from "../middlewares/auth.ts";
 
@@ -22,8 +22,8 @@ routesPage.put("/:slug", authMiddleware, updatePage);
  * @apiReturn datetime createdAt
  * @apiReturn datetime updatedAt
  */
-async function getPage (ctx) : void {
-    let page = await Page.where('slug', ctx.params.slug).get();
+async function getPage (ctx: Context) : Promise<void> {
+    const page = await Page.where('slug', ctx.params.slug).get();
 
     if(page.length == 0) {
         ctx.response.status = 404;
@@ -50,7 +50,7 @@ async function getPage (ctx) : void {
  * @apiReturn datetime updatedAt
  * @apiAuthentication
  */
-async function createPage (ctx) : void {
+async function createPage (ctx: Context) : Promise<void> {
     let data = await ctx.request.body().value;
     data.slug = ctx.params.slug;
 
@@ -85,10 +85,9 @@ async function createPage (ctx) : void {
  * @apiReturn datetime updatedAt
  * @apiAuthentication
  */
-async function updatePage (ctx) : void {
-    let data = await ctx.request.body().value;
-
-    let page = await Page.where('slug', ctx.params.slug).get();
+async function updatePage (ctx: Context) : Promise<void> {
+    const data = await ctx.request.body().value;
+    const page = await Page.where('slug', ctx.params.slug).get();
 
     if(page.length == 0) {
         ctx.response.status = 404;
@@ -104,7 +103,7 @@ async function updatePage (ctx) : void {
     ctx.response.body = result.body;
 }
 
-const save = async (page: Page, data: object) => {
+const save = async (page: Page, data: any) => {
     try {
         if(data.slug !== undefined) page.slug = data.slug;
         if(data.title !== undefined) page.title = data.title;
@@ -122,7 +121,7 @@ const save = async (page: Page, data: object) => {
             status: 200,
             body: JSON.stringify(Page.sanitize(resultPage)),
         };
-    } catch(error: Error) {
+    } catch(error: unknown) {
         if(error.message === "Duplicate entry '" + data.slug + "' for key 'slug'") {
             return {
                 status: 409,

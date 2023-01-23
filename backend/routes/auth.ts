@@ -1,4 +1,4 @@
-import { config, env, log, Router, bcrypt, djwt } from "../vendor.ts";
+import { config, env, log, Router, type Context, bcrypt, djwt } from "../vendor.ts";
 env({ export: true });
 import { authMiddleware } from "../middlewares/auth.ts";
 
@@ -8,6 +8,7 @@ export const routesAuth = new Router();
 
 routesAuth.post("/token/create", tokenCreate);
 routesAuth.post("/token/verify", tokenVerify);
+routesAuth.get("/me", authMiddleware, getMe);
 
 /**
  * @apiTitle "Token Create"
@@ -18,7 +19,7 @@ routesAuth.post("/token/verify", tokenVerify);
  * @apiReturn string token "JWT token for further authentification"
  * @apiReturn User user "User object of authenticated user"
  */
-export async function tokenCreate (ctx) {
+async function tokenCreate (ctx: Context) : Promise<void> {
     let data = await ctx.request.body().value;
 
     if(
@@ -71,7 +72,7 @@ export async function tokenCreate (ctx) {
  * @apiParam string token true "The JWT token"
  * @apiReturn User user "User object of authenticated user"
  */
-export async function tokenVerify (ctx) {
+async function tokenVerify (ctx: Context) : Promise<void> {
     let data = await ctx.request.body().value;
 
     if(
@@ -122,9 +123,9 @@ export async function tokenVerify (ctx) {
  * @apiReturn User user "User object of authenticated user"
  * @apiAuthentication
  */
-routesAuth.get("/me", authMiddleware, async (ctx) => {
+function getMe (ctx: Context) : void {
     ctx.response.status = 200;
     ctx.response.body = JSON.stringify({
         user: User.sanitize(ctx.request.user)
     });
-});
+}

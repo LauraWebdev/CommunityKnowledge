@@ -1,4 +1,4 @@
-import { config, env, log, Router, bcrypt } from "../vendor.ts";
+import { config, env, log, Router, type Context, bcrypt } from "../vendor.ts";
 env({ export: true });
 import { authMiddleware } from "../middlewares/auth.ts";
 
@@ -21,7 +21,7 @@ routesUser.put("/:username", authMiddleware, updateUser);
  * @apiReturn datetime createdAt
  * @apiReturn datetime updatedAt
  */
-async function getUser (ctx) : void {
+async function getUser (ctx: Context) : Promise<void> {
     let user = await User.where('username', ctx.params.username).get();
 
     if(user.length == 0) {
@@ -47,7 +47,7 @@ async function getUser (ctx) : void {
  * @apiReturn datetime updatedAt
  * @apiAuthentication
  */
-async function createUser (ctx) : void {
+async function createUser (ctx: Context) : Promise<void> {
     let data = await ctx.request.body().value;
     data.username = ctx.params.username;
 
@@ -80,7 +80,7 @@ async function createUser (ctx) : void {
  * @apiReturn datetime updatedAt
  * @apiAuthentication
  */
-async function updateUser (ctx) : void {
+async function updateUser (ctx: Context) : Promise<void> {
     let data = await ctx.request.body().value;
 
     let user = await User.where('username', ctx.params.username).get();
